@@ -1,0 +1,54 @@
+# Place this at .github/workflows/publish.yml in the PUBLIC repo.
+# That public repo's only job: pull chapters from the PRIVATE repo,
+# encrypt them, and publish the gated reader to GitHub Pages (gh-pages).
+#
+# Required secrets in THIS (public) repo:
+#   PASS                - the reader passphrase (same one used to encrypt)
+#   PRIVATE_REPO_TOKEN  - a PAT with read access to the private repo
+name: Publish encrypted reader
+
+on:
+  schedule:
+    - cron: "17 5 * * *"      # 05:17 UTC, after the bot run
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Clone the PRIVATE repo (reader code + raw chapters)
+        env:
+          TOKEN: ${{ secrets.PRIVATE_REPO_TOKEN }}
+        run: |
+          rm -rf /tmp/priv
+          git clone --depth 1 "https://x-access-token:${TOKEN}@github.com/Ill-ACreed/jadescrolls.git" /tmp/priv
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Encrypt chapters with PASS
+        working-directory: /tmp/priv
+        env:
+          PASS: ${{ secrets.PASS }}
+        run: node encrypt.js
+
+      - name: Build + publish to gh-pages
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          rm -rf /tmp/site && mkdir -p /tmp/site/chapters
+          cp /tmp/priv/reader.html /tmp/site/
+          cp /tmp/priv/reader.html /tmp/site/index.html
+          cp /tmp/priv/chapters/manifest.json /tmp/site/chapters/ 2>/dev/null || true
+          cp /tmp/priv/chapters/*.enc /tmp/site/chapters/ 2>/dev/null || true
+          cd /tmp/site
+          git init -q && git checkout -b gh-pages
+          git add -A
+          git -c user.email="reader@jadescrolls.local" -c user.name="Reader" commit -q -m "publish encrypted reader $(date -u +%Y-%m-%dT%H:%M:%SZ)" || echo "nothing to publish"
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${{ github.repository }}.git"
+          git push -f origin gh-pages

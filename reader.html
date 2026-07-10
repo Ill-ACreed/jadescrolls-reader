@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JadeScrolls Reader</title>
+<style>
+  :root {
+    --bg: #f6f1e7; --panel: #efe8da; --panel-2: #e7dfce;
+    --text: #2b2722; --muted: #8a8170; --accent: #b8862b;
+    --border: #ddd3bf; --hover: #e3d9c4; --bar: #b8862b;
+  }
+  [data-theme="dark"] {
+    --bg: #0f1115; --panel: #161a21; --panel-2: #1c212b;
+    --text: #d7d2c7; --muted: #7c8694; --accent: #d9a13b;
+    --border: #262c38; --hover: #222934; --bar: #d9a13b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Iowan Old Style","Palatino Linotype","Noto Serif",Georgia,serif;
+    display: flex; height: 100vh; overflow: hidden;
+  }
+  #sidebar { width: 300px; min-width: 300px; background: var(--panel);
+    border-right: 1px solid var(--border); display: flex; flex-direction: column; transition: transform .25s ease; }
+  .sb-head { padding: 18px 18px 12px; border-bottom: 1px solid var(--border); }
+  .sb-head h1 { font-size: 18px; margin: 0 0 2px; letter-spacing: .3px; font-family: system-ui, sans-serif; }
+  .sb-head .sub { font-size: 12px; color: var(--muted); font-family: system-ui, sans-serif; }
+  .search { margin-top: 12px; width: 100%; padding: 9px 12px; border-radius: 9px;
+    border: 1px solid var(--border); background: var(--panel-2); color: var(--text);
+    font-size: 14px; font-family: system-ui, sans-serif; outline: none; }
+  .search:focus { border-color: var(--accent); }
+  #list { flex: 1; overflow-y: auto; padding: 8px; }
+  .chap { padding: 11px 13px; border-radius: 9px; cursor: pointer; margin-bottom: 3px; border: 1px solid transparent; transition: background .12s; }
+  .chap:hover { background: var(--hover); }
+  .chap.active { background: var(--hover); border-color: var(--accent); }
+  .chap .n { font-size: 11px; color: var(--accent); font-family: system-ui, sans-serif; font-weight: 600; }
+  .chap .t { font-size: 14px; margin-top: 2px; line-height: 1.35; }
+  #reader { flex: 1; position: relative; display: flex; flex-direction: column; }
+  #progress { height: 3px; background: transparent; width: 100%; }
+  #progress > div { height: 100%; width: 0; background: var(--bar); transition: width .1s; }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 10px 20px;
+    border-bottom: 1px solid var(--border); background: var(--panel); font-family: system-ui, sans-serif; }
+  .topbar .spacer { flex: 1; }
+  .btn { background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px; }
+  .btn:hover { border-color: var(--accent); }
+  .btn:disabled { opacity: .4; cursor: default; }
+  .icon-btn { width: 36px; text-align: center; padding: 7px 0; }
+  #content { flex: 1; overflow-y: auto; padding: 46px 24px 120px; }
+  #content .col { max-width: 720px; margin: 0 auto; }
+  #content h2 { font-size: 26px; line-height: 1.3; margin: 0 0 6px; font-weight: 600; }
+  #content .meta { color: var(--muted); font-size: 14px; margin-bottom: 34px; font-family: system-ui, sans-serif; }
+  #content p { font-size: var(--fs, 19px); line-height: 1.95; margin: 0 0 1.25em; text-align: justify; text-justify: inter-word; hyphens: auto; }
+  .empty { color: var(--muted); text-align: center; margin-top: 18vh; font-family: system-ui, sans-serif; }
+  .menu-toggle { display: none; }
+
+  /* Gate */
+  #gate { position: fixed; inset: 0; background: var(--bg); z-index: 50;
+    display: flex; align-items: center; justify-content: center; flex-direction: column; font-family: system-ui, sans-serif; }
+  #gate .box { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 30px 28px; width: 320px; }
+  #gate h2 { margin: 0 0 4px; font-size: 17px; }
+  #gate p { margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+  #gate input { width: 100%; padding: 10px 12px; border-radius: 9px; border: 1px solid var(--border);
+    background: var(--panel-2); color: var(--text); font-size: 14px; outline: none; }
+  #gate input:focus { border-color: var(--accent); }
+  #gate button { margin-top: 14px; width: 100%; padding: 10px; border-radius: 9px; border: 1px solid var(--accent);
+    background: var(--accent); color: #fff; font-size: 14px; cursor: pointer; }
+  #gate .err { color: #c0392b; font-size: 12px; margin-top: 10px; min-height: 16px; }
+
+  @media (max-width: 760px) {
+    #sidebar { position: absolute; z-index: 20; height: 100%; transform: translateX(-100%); box-shadow: 4px 0 24px rgba(0,0,0,.3); }
+    #sidebar.open { transform: translateX(0); }
+    .menu-toggle { display: inline-block; }
+  }
+</style>
+</head>
+<body>
+  <div id="gate">
+    <div class="box">
+      <h2>🔒 Locked reader</h2>
+      <p>Enter the passphrase to decrypt chapters.</p>
+      <input id="pass" type="password" placeholder="passphrase" autofocus />
+      <button id="unlockBtn">Unlock</button>
+      <div class="err" id="gateErr"></div>
+    </div>
+  </div>
+
+  <aside id="sidebar">
+    <div class="sb-head">
+      <h1>JadeScrolls</h1>
+      <div class="sub" id="count">— chapters</div>
+      <input class="search" id="search" placeholder="Search chapters…" />
+    </div>
+    <div id="list"></div>
+  </aside>
+
+  <main id="reader">
+    <div id="progress"><div></div></div>
+    <div class="topbar">
+      <button class="btn menu-toggle" id="menuBtn">☰</button>
+      <button class="btn" id="prevBtn">← Prev</button>
+      <button class="btn" id="nextBtn">Next →</button>
+      <div class="spacer"></div>
+      <div id="fontCtl">
+        <button class="btn icon-btn" id="fsDown">A−</button>
+        <button class="btn icon-btn" id="fsUp">A+</button>
+      </div>
+      <button class="btn icon-btn" id="themeBtn" title="Toggle theme">◐</button>
+    </div>
+    <div id="content">
+      <div class="empty" id="empty">Select a chapter from the left to start reading.</div>
+      <div class="col" id="col" style="display:none">
+        <h2 id="ctitle"></h2>
+        <div class="meta" id="cmeta"></div>
+        <div id="cbody"></div>
+      </div>
+    </div>
+  </main>
+
+<script>
+const ITER = 120000;
+const LS = {
+  get: (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+};
+let CHAPTERS = [], ENCRYPTED = false, PASS = null, current = null;
+
+function escapeHtml(s){ return (s||"").replace(/[&<>"]/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[m])); }
+function b64dec(s){ const b=atob(s), u=new Uint8Array(b.length); for(let i=0;i<b.length;i++) u[i]=b.charCodeAt(i); return u; }
+
+async function deriveKey(pass, salt){
+  const enc=new TextEncoder();
+  const base=await crypto.subtle.importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({name:"PBKDF2", salt, iterations:ITER, hash:"SHA-256"}, base,
+    {name:"AES-GCM", length:256}, false, ["encrypt","decrypt"]);
+}
+async function decryptChapter(file, pass){
+  const res=await fetch("chapters/"+encodeURIComponent(file));
+  const blob=await res.text();
+  const [sb, ivb, ctb]=blob.split(":");
+  const salt=b64dec(sb), iv=b64dec(ivb), ct=b64dec(ctb);
+  const key=await deriveKey(pass, salt);
+  const plain=await crypto.subtle.decrypt({name:"AES-GCM", iv}, key, ct);
+  return JSON.parse(new TextDecoder().decode(plain));
+}
+function loadPlain(file){
+  return fetch("chapters/"+encodeURIComponent(file)).then(r=>r.text()).then(text=>{
+    const lines=text.split("\n");
+    return { title: lines[0]||"", meta: lines[1]||"", content: lines.slice(3).join("\n").trim() };
+  });
+}
+
+async function loadManifest(){
+  const m=await fetch("chapters/manifest.json",{cache:"no-cache"}).then(r=>r.json());
+  ENCRYPTED=!!m.encrypted; CHAPTERS=m.chapters||[];
+}
+function renderList(filter=""){
+  const list=document.getElementById("list");
+  const q=filter.trim().toLowerCase();
+  const items=CHAPTERS.filter(c=>!q || (("CHAPTER "+c.number+(c.title?(" "+c.title):""))).toLowerCase().includes(q))
+    .sort((a,b)=>a.number-b.number);
+  list.innerHTML="";
+  for(const c of items){
+    const el=document.createElement("div");
+    el.className="chap"+(current&&current.file===c.file?" active":"");
+    const label = c.title ? c.title : (ENCRYPTED ? "" : "");
+    el.innerHTML=`<div class="n">CHAPTER ${c.number}</div><div class="t">${escapeHtml(label||("chapter "+c.number))}</div>`;
+    el.onclick=()=>{ openChapter(c); closeSidebar(); };
+    list.appendChild(el);
+  }
+  document.getElementById("count").textContent=`${CHAPTERS.length} chapters`;
+}
+async function openChapter(c){
+  current=c;
+  document.getElementById("empty").style.display="none";
+  document.getElementById("col").style.display="block";
+  let data;
+  try { data = ENCRYPTED ? await decryptChapter(c.file, PASS) : await loadPlain(c.file); }
+  catch(e){ document.getElementById("cbody").innerHTML=`<p style="color:#c0392b">Failed to decrypt — wrong passphrase? Reload and try again.</p>`; return; }
+  document.getElementById("ctitle").textContent=data.title;
+  document.getElementById("cmeta").textContent=data.meta;
+  const paras=data.content.split(/\n{2,}/).map(p=>p.trim()).filter(Boolean);
+  document.getElementById("cbody").innerHTML=paras.map(p=>`<p>${escapeHtml(p).replace(/\n/g,"<br>")}</p>`).join("");
+  const content=document.getElementById("content");
+  content.scrollTop=0;
+  renderList(document.getElementById("search").value);
+  LS.set("last", c.file);
+  updateNav();
+}
+function updateNav(){
+  const idx=CHAPTERS.findIndex(c=>current&&c.file===current.file);
+  const prev=idx>0?CHAPTERS[idx-1]:null;
+  const next=(idx>=0&&idx<CHAPTERS.length-1)?CHAPTERS[idx+1]:null;
+  document.getElementById("prevBtn").disabled=!prev;
+  document.getElementById("nextBtn").disabled=!next;
+  document.getElementById("prevBtn").onclick=prev?()=>openChapter(prev):null;
+  document.getElementById("nextBtn").onclick=next?()=>openChapter(next):null;
+}
+function applyTheme(){ document.documentElement.setAttribute("data-theme", LS.get("theme","light")); }
+function applyFont(){ document.documentElement.style.setProperty("--fs", LS.get("font",19)+"px"); }
+function closeSidebar(){ document.getElementById("sidebar").classList.remove("open"); }
+
+document.getElementById("search").addEventListener("input", e=>renderList(e.target.value));
+document.getElementById("themeBtn").onclick=()=>{ const t=LS.get("theme","light")==="dark"?"light":"dark"; LS.set("theme",t); applyTheme(); };
+document.getElementById("fsUp").onclick=()=>{ const f=Math.min(26,LS.get("font",19)+1); LS.set("font",f); applyFont(); };
+document.getElementById("fsDown").onclick=()=>{ const f=Math.max(15,LS.get("font",19)-1); LS.set("font",f); applyFont(); };
+document.getElementById("menuBtn").onclick=()=>document.getElementById("sidebar").classList.toggle("open");
+document.getElementById("content").addEventListener("scroll", e=>{
+  if(!current) return;
+  const el=e.target, pct=el.scrollTop/(el.scrollHeight-el.clientHeight||1);
+  document.querySelector("#progress > div").style.width=(pct*100).toFixed(1)+"%";
+  LS.set("scroll:"+current.file, el.scrollTop);
+});
+document.addEventListener("keydown", e=>{
+  if(e.target.tagName==="INPUT") return;
+  if(e.key==="ArrowRight") document.getElementById("nextBtn").click();
+  if(e.key==="ArrowLeft") document.getElementById("prevBtn").click();
+});
+
+async function start(){
+  applyTheme(); applyFont();
+  const savedPass=sessionStorage.getItem("jade_pass");
+  if(savedPass){ PASS=savedPass; document.getElementById("gate").style.display="none"; }
+  try { await loadManifest(); } catch(e){
+    document.getElementById("empty").textContent="No chapters found. Run the bot to download some, or check chapters/manifest.json.";
+    return;
+  }
+  if(ENCRYPTED && !PASS){ return; } // gate stays visible, wait for passphrase
+  document.getElementById("gate").style.display = "none"; // local / already unlocked
+  renderList();
+  const last=LS.get("last",null);
+  const s=CHAPTERS.find(c=>c.file===last)||CHAPTERS[0];
+  if(s) openChapter(s);
+}
+document.getElementById("unlockBtn").onclick=async () => {
+  const p=document.getElementById("pass").value;
+  if(!p){ document.getElementById("gateErr").textContent="Passphrase required."; return; }
+  // verify by decrypting the first chapter
+  try {
+    const m=await fetch("chapters/manifest.json",{cache:"no-cache"}).then(r=>r.json());
+    const first=m.chapters&&m.chapters[0];
+    if(!first){ document.getElementById("gateErr").textContent="No encrypted chapters."; return; }
+    await decryptChapter(first.file, p);
+    PASS=p; sessionStorage.setItem("jade_pass", p);
+    document.getElementById("gate").style.display="none";
+    await start();
+  } catch(e){
+    document.getElementById("gateErr").textContent="Wrong passphrase or corrupt file.";
+  }
+};
+document.getElementById("pass").addEventListener("keydown", e=>{ if(e.key==="Enter") document.getElementById("unlockBtn").click(); });
+
+start();
+</script>
+</body>
+</html>
