@@ -1,0 +1,513 @@
+{
+  "encrypted": true,
+  "chapters": [
+    {
+      "number": 486,
+      "file": "486-chapter-486.enc"
+    },
+    {
+      "number": 496,
+      "file": "496-chapter-496.enc"
+    },
+    {
+      "number": 497,
+      "file": "497-chapter-497.enc"
+    },
+    {
+      "number": 498,
+      "file": "498-chapter-498.enc"
+    },
+    {
+      "number": 499,
+      "file": "499-chapter-499.enc"
+    },
+    {
+      "number": 500,
+      "file": "500-chapter-500.enc"
+    },
+    {
+      "number": 501,
+      "file": "501-chapter-501.enc"
+    },
+    {
+      "number": 502,
+      "file": "502-chapter-502.enc"
+    },
+    {
+      "number": 503,
+      "file": "503-chapter-503.enc"
+    },
+    {
+      "number": 504,
+      "file": "504-chapter-504.enc"
+    },
+    {
+      "number": 505,
+      "file": "505-chapter-505.enc"
+    },
+    {
+      "number": 506,
+      "file": "506-chapter-506.enc"
+    },
+    {
+      "number": 507,
+      "file": "507-chapter-507.enc"
+    },
+    {
+      "number": 508,
+      "file": "508-chapter-508.enc"
+    },
+    {
+      "number": 509,
+      "file": "509-chapter-509.enc"
+    },
+    {
+      "number": 510,
+      "file": "510-chapter-510.enc"
+    },
+    {
+      "number": 511,
+      "file": "511-chapter-511.enc"
+    },
+    {
+      "number": 512,
+      "file": "512-chapter-512.enc"
+    },
+    {
+      "number": 513,
+      "file": "513-chapter-513.enc"
+    },
+    {
+      "number": 514,
+      "file": "514-chapter-514.enc"
+    },
+    {
+      "number": 515,
+      "file": "515-chapter-515.enc"
+    },
+    {
+      "number": 516,
+      "file": "516-chapter-516.enc"
+    },
+    {
+      "number": 517,
+      "file": "517-chapter-517.enc"
+    },
+    {
+      "number": 518,
+      "file": "518-chapter-518.enc"
+    },
+    {
+      "number": 519,
+      "file": "519-chapter-519.enc"
+    },
+    {
+      "number": 520,
+      "file": "520-chapter-520.enc"
+    },
+    {
+      "number": 521,
+      "file": "521-chapter-521.enc"
+    },
+    {
+      "number": 522,
+      "file": "522-chapter-522.enc"
+    },
+    {
+      "number": 523,
+      "file": "523-chapter-523.enc"
+    },
+    {
+      "number": 524,
+      "file": "524-chapter-524.enc"
+    },
+    {
+      "number": 525,
+      "file": "525-chapter-525.enc"
+    },
+    {
+      "number": 526,
+      "file": "526-chapter-526.enc"
+    },
+    {
+      "number": 527,
+      "file": "527-chapter-527.enc"
+    },
+    {
+      "number": 528,
+      "file": "528-chapter-528.enc"
+    },
+    {
+      "number": 529,
+      "file": "529-chapter-529.enc"
+    },
+    {
+      "number": 530,
+      "file": "530-chapter-530.enc"
+    },
+    {
+      "number": 531,
+      "file": "531-chapter-531.enc"
+    },
+    {
+      "number": 532,
+      "file": "532-chapter-532.enc"
+    },
+    {
+      "number": 533,
+      "file": "533-chapter-533.enc"
+    },
+    {
+      "number": 534,
+      "file": "534-chapter-534.enc"
+    },
+    {
+      "number": 535,
+      "file": "535-chapter-535.enc"
+    },
+    {
+      "number": 536,
+      "file": "536-chapter-536.enc"
+    },
+    {
+      "number": 537,
+      "file": "537-chapter-537.enc"
+    },
+    {
+      "number": 538,
+      "file": "538-chapter-538.enc"
+    },
+    {
+      "number": 539,
+      "file": "539-chapter-539.enc"
+    },
+    {
+      "number": 540,
+      "file": "540-chapter-540.enc"
+    },
+    {
+      "number": 541,
+      "file": "541-chapter-541.enc"
+    },
+    {
+      "number": 542,
+      "file": "542-chapter-542.enc"
+    },
+    {
+      "number": 543,
+      "file": "543-chapter-543.enc"
+    },
+    {
+      "number": 544,
+      "file": "544-chapter-544.enc"
+    },
+    {
+      "number": 545,
+      "file": "545-chapter-545.enc"
+    },
+    {
+      "number": 546,
+      "file": "546-chapter-546.enc"
+    },
+    {
+      "number": 547,
+      "file": "547-chapter-547.enc"
+    },
+    {
+      "number": 548,
+      "file": "548-chapter-548.enc"
+    },
+    {
+      "number": 549,
+      "file": "549-chapter-549.enc"
+    },
+    {
+      "number": 550,
+      "file": "550-chapter-550.enc"
+    },
+    {
+      "number": 551,
+      "file": "551-chapter-551-551.enc"
+    },
+    {
+      "number": 552,
+      "file": "552-chapter-552-552.enc"
+    },
+    {
+      "number": 553,
+      "file": "553-chapter-553-553.enc"
+    },
+    {
+      "number": 554,
+      "file": "554-chapter-554-554.enc"
+    },
+    {
+      "number": 555,
+      "file": "555-chapter-555-555.enc"
+    },
+    {
+      "number": 556,
+      "file": "556-chapter-556-556.enc"
+    },
+    {
+      "number": 557,
+      "file": "557-chapter-557-557.enc"
+    },
+    {
+      "number": 558,
+      "file": "558-chapter-558-558.enc"
+    },
+    {
+      "number": 559,
+      "file": "559-chapter-559-559.enc"
+    },
+    {
+      "number": 560,
+      "file": "560-chapter-560-560.enc"
+    },
+    {
+      "number": 561,
+      "file": "561-chapter-561-561.enc"
+    },
+    {
+      "number": 562,
+      "file": "562-chapter-562-562.enc"
+    },
+    {
+      "number": 563,
+      "file": "563-chapter-563-563.enc"
+    },
+    {
+      "number": 564,
+      "file": "564-chapter-564-564.enc"
+    },
+    {
+      "number": 565,
+      "file": "565-chapter-565-565.enc"
+    },
+    {
+      "number": 566,
+      "file": "566-chapter-566-566.enc"
+    },
+    {
+      "number": 567,
+      "file": "567-chapter-567-567.enc"
+    },
+    {
+      "number": 568,
+      "file": "568-chapter-568-568.enc"
+    },
+    {
+      "number": 569,
+      "file": "569-chapter-569-569.enc"
+    },
+    {
+      "number": 570,
+      "file": "570-chapter-570-570.enc"
+    },
+    {
+      "number": 571,
+      "file": "571-chapter-571-571.enc"
+    },
+    {
+      "number": 572,
+      "file": "572-chapter-572-572.enc"
+    },
+    {
+      "number": 573,
+      "file": "573-chapter-573-573.enc"
+    },
+    {
+      "number": 574,
+      "file": "574-chapter-574-574.enc"
+    },
+    {
+      "number": 575,
+      "file": "575-chapter-575-575.enc"
+    },
+    {
+      "number": 576,
+      "file": "576-chapter-576-576.enc"
+    },
+    {
+      "number": 577,
+      "file": "577-chapter-577-577.enc"
+    },
+    {
+      "number": 578,
+      "file": "578-chapter-578-578.enc"
+    },
+    {
+      "number": 579,
+      "file": "579-chapter-579-579.enc"
+    },
+    {
+      "number": 580,
+      "file": "580-chapter-580-580.enc"
+    },
+    {
+      "number": 581,
+      "file": "581-chapter-581-581.enc"
+    },
+    {
+      "number": 582,
+      "file": "582-chapter-582-582.enc"
+    },
+    {
+      "number": 583,
+      "file": "583-chapter-583-583.enc"
+    },
+    {
+      "number": 584,
+      "file": "584-chapter-584-584.enc"
+    },
+    {
+      "number": 585,
+      "file": "585-chapter-585-585.enc"
+    },
+    {
+      "number": 586,
+      "file": "586-chapter-586-586.enc"
+    },
+    {
+      "number": 587,
+      "file": "587-chapter-587-587.enc"
+    },
+    {
+      "number": 588,
+      "file": "588-chapter-588-588.enc"
+    },
+    {
+      "number": 589,
+      "file": "589-chapter-589-589.enc"
+    },
+    {
+      "number": 590,
+      "file": "590-chapter-589-590.enc"
+    },
+    {
+      "number": 591,
+      "file": "591-chapter-591-591.enc"
+    },
+    {
+      "number": 592,
+      "file": "592-chapter-592-592.enc"
+    },
+    {
+      "number": 593,
+      "file": "593-chapter-593-593.enc"
+    },
+    {
+      "number": 594,
+      "file": "594-chapter-594-594.enc"
+    },
+    {
+      "number": 595,
+      "file": "595-chapter-595-595.enc"
+    },
+    {
+      "number": 596,
+      "file": "596-chapter-596-596.enc"
+    },
+    {
+      "number": 597,
+      "file": "597-chapter-597-597.enc"
+    },
+    {
+      "number": 598,
+      "file": "598-chapter-598-598.enc"
+    },
+    {
+      "number": 599,
+      "file": "599-chapter-599-599.enc"
+    },
+    {
+      "number": 600,
+      "file": "600-chapter-600-600.enc"
+    },
+    {
+      "number": 601,
+      "file": "601-chapter-601-601.enc"
+    },
+    {
+      "number": 602,
+      "file": "602-chapter-602-602.enc"
+    },
+    {
+      "number": 603,
+      "file": "603-chapter-603-603.enc"
+    },
+    {
+      "number": 604,
+      "file": "604-chapter-604-604.enc"
+    },
+    {
+      "number": 605,
+      "file": "605-chapter-605-605.enc"
+    },
+    {
+      "number": 606,
+      "file": "606-chapter-606-606.enc"
+    },
+    {
+      "number": 607,
+      "file": "607-chapter-607-607.enc"
+    },
+    {
+      "number": 608,
+      "file": "608-chapter-608-608.enc"
+    },
+    {
+      "number": 609,
+      "file": "609-chapter-609-609.enc"
+    },
+    {
+      "number": 610,
+      "file": "610-chapter-610-610.enc"
+    },
+    {
+      "number": 611,
+      "file": "611-chapter-611-611.enc"
+    },
+    {
+      "number": 612,
+      "file": "612-chapter-612-612.enc"
+    },
+    {
+      "number": 613,
+      "file": "613-chapter-613-613.enc"
+    },
+    {
+      "number": 614,
+      "file": "614-chapter-614-614.enc"
+    },
+    {
+      "number": 615,
+      "file": "615-chapter-615-615.enc"
+    },
+    {
+      "number": 616,
+      "file": "616-chapter-616-616.enc"
+    },
+    {
+      "number": 617,
+      "file": "617-chapter-617-617.enc"
+    },
+    {
+      "number": 618,
+      "file": "618-chapter-618-618.enc"
+    },
+    {
+      "number": 619,
+      "file": "619-chapter-619-619.enc"
+    },
+    {
+      "number": 620,
+      "file": "620-chapter-620-620.enc"
+    },
+    {
+      "number": 621,
+      "file": "621-chapter-621-621.enc"
+    }
+  ]
+}
